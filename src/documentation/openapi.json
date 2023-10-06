@@ -1,0 +1,79 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Demo express App",
+        "version": "1.0.0",
+        "description": "Demo express API\n",
+        "contact": {
+            "email": "chimisepro@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "x-github": "https://github.com/Chimise"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000/api/v1"
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "summary": "Login User",
+                "tags": [
+                    "Authentication"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Login a previously created user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"$ref": "#/components/schemas/LoginData"}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"$ref": "#/components/schemas/User"}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not Authorized"
+                    }
+                }
+
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "LoginData": {
+                "required": ["email", "password"],
+                "description": "Login data",
+                "type": "object",
+                "properties": {
+                    "email": {"type": "string", "description": "Email to register user"},
+                    "password": {"type": "string", "minimum": 6, "description": "User's password"}
+                }
+
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string", "description": "User id"}
+                },
+                "additionalProperties": [{"$ref": "#/components/schemas/LoginData"}]
+            }
+        }
+    }
+}
