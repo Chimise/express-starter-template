@@ -15,6 +15,11 @@ const logger = winston.createLogger({
   ],
 });
 
+export const stream = {
+    write(data) {
+        logger.info(data.trim());
+    }
+}
 
 export default logger;
 
